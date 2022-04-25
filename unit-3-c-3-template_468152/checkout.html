@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Checkout</title>
+  </head>
+  <style>
+    #movie{
+      border: 1px solid black;
+    }
+  </style>
+  <body>
+    <div id="navbar">
+      <h1 id="amount">Checkout | Cost: 100/seat</h1>
+      <!-- Display the wallet amount here inside h1 tag with id as "wallet". Note only amount, no extra text. Like 500 not Rs 500 -->
+    </div>
+    <div id="user-detail">
+      <!-- input field to accept user name with id as "user_name"  -->
+      <!-- input field to accept number of seats with id as "number_of_seats"  -->
+      <!-- A submit button to confirm booking with id as "confirm"  -->
+      <input id="user_name" type="text" placeholder="Enter your name">
+      <input id="number_of_seats" type="text" placeholder="number of seats">
+      <button onclick="submit()" id="confirm">
+        confirm booking
+      </button>
+    </div>
+
+    <div id="movie">
+      <!-- Append the selected movie for booking here -->
+      <!-- movie should have title and image  -->
+      <!-- It should be the same movie you selected for booking  -->
+    </div>
+  </body>
+</html>
+
+<script>
+let amount=JSON.parse(localStorage.getItem("amount"))||0;
+console.log(amount)
+ document.getElementById("wallet").innerText=amount;
+function submit(){
+let seats=document.getElementById("number_of_seats").value;
+ let deduction=Number(seats)*100;
+ if(deduction<=amount){
+   alert("Booking successfull");
+   amount-=deduction;
+   localStorage.setItem("amount",JSON.stringify(amount));
+   document.getElementById("wallet").innerText=amount;
+ }
+ else{
+   alert("Insufficient Balance!")
+ }
+}
+
+</script>
+<script>
+  let data=JSON.parse(localStorage.getItem("movie"));
+  console.log(data)
+
+  let details=()=>{
+    let div=document.createElement("div");
+    div.setAttribute("id","div");
+let img=document.createElement("img");
+img.src=data.Poster;
+let p1=document.createElement("p");
+p1.innerText=data.Title;
+let p2=document.createElement("p");
+p2.innerText=data.Year;
+let button=document.createElement("button");
+button.innerText="book now"
+div.append(img,p1,p2);
+document.getElementById("movie").append(div);
+  }
+ 
+details();
+ 
+   
+
+
+</script>
